@@ -1,0 +1,18 @@
+on:
+  issue_comment:
+    types: [created]
+jobs:
+  action:
+      runs-on: ubuntu-latest
+      if: github.event_name == 'issue_comment'
+      steps:  
+        - name: OpenAI Image Generator
+          uses: brandoncollins7/openai-image-generator@v1.1
+          with:
+            github-token: ${{ secrets.GITHUB_TOKEN }}
+            type: "text"
+            api-key: ${{ secrets.OPENAI_API_KEY }}
+            query: ${{ github.event.comment.body }}
+            image_size: '256x256'
+            model: 'text-davinci-003'       
+            
